@@ -11,10 +11,6 @@ export default function Layout() {
       py="150px"
       maxWidth="container.xl"
       borderRadius="15"
-      _dark={{
-        bg: 'gray',
-        color: 'white',
-      }}
     >
       <NavBar />
       <Outlet />
