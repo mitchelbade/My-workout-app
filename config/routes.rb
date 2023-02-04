@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
   
   # resources :program_workouts
-  # resources :programs
-  # resources :workout_exercises
-  # resources :workouts, only: [:create]
-  # resources :muscle_groups
-  # resources :exercises
+  # resources :programs, only: [:index]
+  resources :workout_exercises, only: [:index, :create, :update]
+  resources :workouts, only: [:index, :create, :update, :destroy]
+  resources :muscle_groups, only: [:index]
+  resources :exercises, only: [:index, :create, :update, :destroy]
   # resources :users
 
   post '/signup', to: 'users#create'
   get '/me', to: 'users#show'
-
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 

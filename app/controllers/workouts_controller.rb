@@ -1,14 +1,7 @@
 class WorkoutsController < ApplicationController
 
-    def create
-        workout = Workout.create(workout_params)
-        render json: workout
+    def index
+        render json: Workout.all
     end
-
-    private
-
-    def workout_params
-        params.require(:workout).permit(:name, :description)
-    end
-
+    
 end

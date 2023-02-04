@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2023_01_27_041433) do
 
   create_table "exercises", force: :cascade do |t|
     t.string "name"
+    t.string "image"
     t.string "description"
     t.bigint "muscle_group_id", null: false
     t.datetime "created_at", precision: 6, null: false
