@@ -21,7 +21,7 @@ export default function WorkoutCard({ workout }) {
     <div>
     {show ? (
     <SimpleGrid 
-      spacing={2}
+      spacing={10}
       templateColumns='repeat(auto-fill, minmax(400px, 1fr))'
       mx='auto'
     >
@@ -31,7 +31,9 @@ export default function WorkoutCard({ workout }) {
       onClick={() => setShow(false)}
       />
       <Card
-      onClick={() => console.log('clicked')}
+      overflow='hidden'
+      variant='ghost'
+      borderRadius='15px'
       _light={{
         bg: 'gray',
         color: 'black',
