@@ -1,7 +1,36 @@
 class WorkoutsController < ApplicationController
 
     def index
-        render json: Workout.all
+        workouts = current_user.workouts
+        render json: workouts, status: :ok
     end
-    
+
+    def show
+        workout = current_user.workouts.find(params[:id])
+        render json: workout, status: :ok
+    end
+
+    def create
+        workout = current_user.workouts.create!(workout_params)
+        render json: workout, status: :created
+    end
+
+    def update
+        workout = current_user.workouts.find(params[:id])
+        workout.update!(workout_params)
+        render json: workout, status: :accepted
+    end
+
+    def destroy
+        workout = current_user.workouts.find(params[:id])
+        workout.destroy
+        head :no_content
+    end
+
+    private
+
+    def workout_params
+        params.permit(:name, :description)
+    end
+
 end

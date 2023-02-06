@@ -9,7 +9,18 @@ const breakpoints = {
   xl: '80em',
 }
 
+// const lightBgImage = 'url(/images/background2.jpg)!important'
+// const darkBgImage = 'url(/images/background.jpg)!important'
+
 const theme = extendTheme({
+//   styles: {
+//     global: {
+//       body: {
+//         backgroundImage: darkBgImage,
+//         backgroundSize: 'cover',
+//     },
+//   },
+// },
   semanticTokens: {
     colors: {
       text: {

@@ -1,4 +1,3 @@
-import './App.css';
 import { 
   createBrowserRouter, 
   RouterProvider, 
@@ -32,11 +31,11 @@ const router = createBrowserRouter(
 export default function App() {
   return (
     <UserProvider>
-      <WorkoutProvider>
-        <ExerciseProvider>
+      <ExerciseProvider>
+        <WorkoutProvider>
           <RouterProvider router={router} />
-        </ExerciseProvider>
-      </WorkoutProvider>
+        </WorkoutProvider>
+      </ExerciseProvider>
     </UserProvider>
   );
 }

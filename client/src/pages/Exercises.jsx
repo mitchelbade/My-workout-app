@@ -7,10 +7,16 @@ import { ExerciseContext } from "../context/exerciseContext"
 export default function Exercises() {
   const { exercises } = useContext(ExerciseContext)
 
-  const exerciseCard = exercises.map((exercise) => <ExerciseCard key={exercise.id} exercise={exercise} />)
+  const exerciseCard = exercises?.map((exercise) => <ExerciseCard key={exercise.id} exercise={exercise} />)
 
   return (
-    <div>
+    <div 
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '.5rem',
+    }}
+    >
       { exerciseCard }
     </div>
   )

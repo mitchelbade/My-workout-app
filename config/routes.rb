@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   # resources :program_workouts
   # resources :programs, only: [:index]
   resources :workout_exercises, only: [:index, :create, :update]
-  resources :workouts, only: [:index, :create, :update, :destroy]
+  resources :workouts
   resources :muscle_groups, only: [:index]
-  resources :exercises, only: [:index, :create, :update, :destroy]
+  resources :exercises, only: [:index, :show]
   # resources :users
 
   post '/signup', to: 'users#create'

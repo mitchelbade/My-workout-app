@@ -20,7 +20,7 @@ export default function ExerciseCard({ exercise }) {
         _light={{
           bg: 'gray',
           color: 'black',
-          opacity: ".85",
+          opacity: ".5",
         }}
         _dark={{
           bg: 'gray',
@@ -31,14 +31,15 @@ export default function ExerciseCard({ exercise }) {
         <Image
           objectFit='cover'
           maxW={{ base: '100%', sm: '200px' }}
-          src={ exercise.image }
-          alt={ exercise.name }
+          src={ exercise?.image }
+          alt={ exercise?.name }
         />
 
         <Stack>
           <CardBody>
-            <Heading size='md'>{exercise.name}</Heading>
-            <Text py='2'>{ exercise.description }</Text>
+            <Heading size='md'>{exercise?.name}</Heading>
+            <Text>{exercise.muscle_group.name}</Text>
+            <Text py='2'>{ exercise?.description }</Text>
           </CardBody>
         </Stack>
       </Card>
