@@ -11,21 +11,27 @@ import {
 import {
   AddIcon,
 } from '@chakra-ui/icons'
+import { useState } from 'react';
+import CreateWorkoutForm from './CreateWorkoutForm';
 
 export default function WorkoutCard({ workout }) {
-
-  console.log(workout)
+  const [show, setShow] = useState(true)
 
   return (
+    <div>
+    {show ? (
     <SimpleGrid 
-    spacing={6} 
-    templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
+      spacing={2}
+      templateColumns='repeat(auto-fill, minmax(400px, 1fr))'
+      mx='auto'
+    >
       <IconButton 
       aria-label='Add Workout'
       icon={<AddIcon />}
+      onClick={() => setShow(false)}
       />
       <Card
-      
+      onClick={() => console.log('clicked')}
       >
         <CardHeader>
           <Heading size='lg'>
@@ -46,6 +52,7 @@ export default function WorkoutCard({ workout }) {
             ) }
         </CardBody>
       </Card>
-    </SimpleGrid>
+    </SimpleGrid> ) : (<CreateWorkoutForm setShow={setShow} />)}
+    </div>
   )
 }

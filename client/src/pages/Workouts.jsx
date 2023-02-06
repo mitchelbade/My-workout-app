@@ -9,8 +9,6 @@ export default function Workouts() {
 
   const workoutCard = workouts?.map((workout) => <WorkoutCard key={workout.id} workout={workout} />)
 
-  console.log(workoutCard)
-
   return (
     <div>
       { workoutCard }
