@@ -20,7 +20,7 @@ export default function ExerciseCard({ exercise }) {
         _light={{
           bg: 'gray',
           color: 'black',
-          opacity: ".5",
+          opacity: ".75",
         }}
         _dark={{
           bg: 'gray',

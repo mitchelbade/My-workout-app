@@ -136,8 +136,18 @@ export default function CreateWorkoutForm({ setShow }) {
 
         <Card
         onClick={() => console.log('clicked')}
-        ml={250}
+        ml='250px'
         padding={5}
+        _light={{
+          bg: 'gray',
+          color: 'black',
+          opacity: ".75",
+        }}
+        _dark={{
+          bg: 'gray',
+          color: 'black',
+          opacity: ".5",
+        }}
         >
           <CardHeader>
             <Heading size='lg'>

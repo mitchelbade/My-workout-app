@@ -3,7 +3,7 @@ import {
   Text,
   Flex,
   Stack,
-  Box,
+  Card,
 } from '@chakra-ui/react';
 
 
@@ -11,25 +11,29 @@ import {
 export default function Home() {
   return (
     <Stack>
-      <Box
-        // variant='ghost'
-        // borderRadius='15px'
-        // _light={{
-        //   bg: 'gray',
-        //   color: 'black',
-        //   opacity: ".5",
-        // }}
-        // _dark={{
-        //   bg: 'gray',
-        //   color: 'black',
-        //   opacity: ".5",
-        // }}
+      <Card
+        alignItems='center'
+        variant='ghost'
+        borderRadius='10px'
+        p={10}
+        _light={{
+          bg: 'gray',
+          color: 'black',
+          opacity: ".75",
+        }}
+        _dark={{
+          bg: 'gray',
+          color: 'black',
+          opacity: ".5",
+        }}
       >
         <Flex>
           <Heading>"Unleash Your Inner Athlete with the Best Workout Companion"</Heading>
         </Flex>
         <Flex>
-          <Text>
+          <Text
+          fontSize={20}
+          >
           Welcome to the ultimate workout companion! We believe that fitness is a journey, 
           not a destination. Our app is designed to help you achieve your fitness goals, 
           whatever they may be. Whether you want to build muscle, burn fat, 
@@ -37,7 +41,7 @@ export default function Home() {
           So, gear up, get inspired, and let's start this journey together!
           </Text>
         </Flex>
-      </Box>
+      </Card>
     </Stack>
   );
 }

@@ -32,6 +32,16 @@ export default function WorkoutCard({ workout }) {
       />
       <Card
       onClick={() => console.log('clicked')}
+      _light={{
+        bg: 'gray',
+        color: 'black',
+        opacity: ".75",
+      }}
+      _dark={{
+        bg: 'gray',
+        color: 'black',
+        opacity: ".5",
+      }}
       >
         <CardHeader>
           <Heading size='lg'>
