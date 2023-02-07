@@ -142,7 +142,7 @@ export default function CreateWorkoutForm({ setShow }) {
         ml='250px'
         padding={5}
         _light={{
-          bg: 'gray',
+          bg: 'gray.100',
           color: 'black',
           opacity: ".75",
         }}
