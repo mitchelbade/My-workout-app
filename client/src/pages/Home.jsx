@@ -16,8 +16,9 @@ export default function Home() {
         variant='ghost'
         borderRadius='10px'
         p={10}
+        shadow={'lg'}
         _light={{
-          bg: 'gray',
+          bg: 'gray.100',
           color: 'black',
           opacity: ".75",
         }}

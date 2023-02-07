@@ -25,10 +25,10 @@ import { ExerciseContext } from '../context/exerciseContext';
 export default function CreateWorkoutForm({ setShow }) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [workoutexercises, setWorkoutExercises] = useState([])
-  const [sets, setSets] = useState([])
-  const [reps, setReps] = useState([])
-  const [weight, setWeight] = useState([])
+  const [workoutExercises, setWorkoutExercises] = useState([])
+  const [sets, setSets] = useState('')
+  const [reps, setReps] = useState('')
+  const [weight, setWeight] = useState('')
   const [addExercise, setAddExercise] = useState(true)
 
   const { exercises } = useContext(ExerciseContext)
@@ -44,13 +44,16 @@ export default function CreateWorkoutForm({ setShow }) {
           icon={<CloseIcon />}
           onClick={() => setShow(true)}
         />
+
+        {!addExercise ? (
         <IconButton 
           mt={-20}
-          aria-label="Close Menu"
+          aria-label="Back"
           size="lg"
           icon={<ArrowLeftIcon />}
           onClick={() => setAddExercise(true)}
-        />
+        />) : ( null ) }
+
         {addExercise ? (
         <Form>
           <FormLabel>Create a workout!</FormLabel>
@@ -158,12 +161,12 @@ export default function CreateWorkoutForm({ setShow }) {
             <Text>
               { description }
             </Text>
-              { workoutexercises?.map((workoutexercises) => 
+              { workoutExercises?.map((workoutExercises) => 
               <Stack>
-              <Heading size='md'>{workoutexercises.name}</Heading>
-              <Text>Sets: {workoutexercises.sets}</Text>
-              <Text>Reps: {workoutexercises.reps}</Text>
-              <Text>Weight: {workoutexercises.weight}</Text>
+              <Heading size='md'>{workoutExercises.name}</Heading>
+              <Text>Sets: {workoutExercises.sets}</Text>
+              <Text>Reps: {workoutExercises.reps}</Text>
+              <Text>Weight: {workoutExercises.weight}</Text>
               </Stack>
               ) }
           </CardBody>

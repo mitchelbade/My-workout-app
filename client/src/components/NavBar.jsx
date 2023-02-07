@@ -212,6 +212,18 @@ export default function NavBar() {
             </Button>
           </NavLink> ) : null}
           {user ? (
+          <NavLink to="/exercises">
+            <Button
+              variant="ghost"
+              aria-label="Exercises"
+              my={5}
+              w="100%"
+              onClick={() => setDisplay('none')}
+            >
+              Exercises
+            </Button>
+          </NavLink> ) : null}
+          {user ? (
           <NavLink to="/logout">
             <Button
               variant="ghost"

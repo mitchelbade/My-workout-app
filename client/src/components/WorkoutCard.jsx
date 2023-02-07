@@ -17,6 +17,8 @@ import CreateWorkoutForm from './CreateWorkoutForm';
 export default function WorkoutCard({ workout }) {
   const [show, setShow] = useState(true)
 
+  console.log(workout)
+
   return (
     <div>
     {show ? (
@@ -29,13 +31,15 @@ export default function WorkoutCard({ workout }) {
       aria-label='Add Workout'
       icon={<AddIcon />}
       onClick={() => setShow(false)}
+      shadow={'lg'}
       />
       <Card
+      shadow={'lg'}
       overflow='hidden'
       variant='ghost'
       borderRadius='15px'
       _light={{
-        bg: 'gray',
+        bg: 'gray.100',
         color: 'black',
         opacity: ".75",
       }}
@@ -56,10 +60,10 @@ export default function WorkoutCard({ workout }) {
           </Text>
             { workout?.exercises.map((exercise) => 
             <Stack>
-            <Heading size='md'>{exercise.name}</Heading>
-            <Text>Sets: {exercise.sets}</Text>
-            <Text>Reps: {exercise.reps}</Text>
-            <Text>Weight: {exercise.weight}</Text>
+            <Heading size='md'>{exercise?.name}</Heading>
+            <Text>Sets: {exercise?.sets}</Text>
+            <Text>Reps: {exercise?.reps}</Text>
+            <Text>Weight: {exercise?.weight}</Text>
             </Stack>
             ) }
         </CardBody>

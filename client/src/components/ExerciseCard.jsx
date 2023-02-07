@@ -17,8 +17,9 @@ export default function ExerciseCard({ exercise }) {
         overflow='hidden'
         variant='ghost'
         borderRadius='15px'
+        shadow={'lg'}
         _light={{
-          bg: 'gray',
+          bg: 'gray.100',
           color: 'black',
           opacity: ".75",
         }}
@@ -38,7 +39,7 @@ export default function ExerciseCard({ exercise }) {
         <Stack>
           <CardBody>
             <Heading size='md'>{exercise?.name}</Heading>
-            <Text>{exercise.muscle_group.name}</Text>
+            <Text>{exercise?.muscle_group.name}</Text>
             <Text py='2'>{ exercise?.description }</Text>
           </CardBody>
         </Stack>
