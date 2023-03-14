@@ -9,7 +9,7 @@ function ExerciseProvider({ children }) {
   useEffect(() => {
     fetch(baseURL + "/exercises")
     .then((r) => r.json())
-    .then((data) => setExercises(data))
+    .then(setExercises)
   }, [])
 
   return (

@@ -1,11 +1,16 @@
-import { useContext } from "react"
 import ExerciseCard from "../components/ExerciseCard"
-import { ExerciseContext } from "../context/exerciseContext"
-
+import { useState, useEffect } from "react"
+import { baseURL } from "../Globals"
 
 
 export default function Exercises() {
-  const { exercises } = useContext(ExerciseContext)
+  const [exercises, setExercises] = useState([]);
+
+  useEffect(() => {
+    fetch(baseURL + "/exercises")
+    .then((r) => r.json())
+    .then(setExercises)
+  }, [])
 
   const exerciseCard = exercises?.map((exercise) => <ExerciseCard key={exercise.id} exercise={exercise} />)
 

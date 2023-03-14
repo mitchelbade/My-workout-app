@@ -9,8 +9,8 @@ function WorkoutProvider({ children }) {
   useEffect(() => {
     fetch(baseURL + "/workouts")
     .then((r) => r.json())
-    .then((data) => setWorkouts(data))
-  }, [])
+    .then(setWorkouts);
+  }, []);
 
   return (
     <WorkoutContext.Provider value={{ workouts, setWorkouts }}>{ children }</WorkoutContext.Provider>

@@ -4,7 +4,7 @@ import { baseURL } from '../Globals';
 const UserContext = createContext("");
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetch(baseURL + "/me").then ((r) => {

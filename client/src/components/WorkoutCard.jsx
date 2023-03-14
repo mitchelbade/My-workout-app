@@ -2,42 +2,29 @@ import {
   Card, 
   CardBody, 
   CardHeader, 
-  Heading, 
-  SimpleGrid,
+  Heading,
   Text,
   Stack,
-  IconButton,
+  CardFooter,
+  ButtonGroup,
+  Button,
+  useColorModeValue,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from "@chakra-ui/react";
-import {
-  AddIcon,
-} from '@chakra-ui/icons'
-import { useState } from 'react';
-import CreateWorkoutForm from './CreateWorkoutForm';
+import { useDisclosure } from "@chakra-ui/hooks";
+import React from "react";
 
 export default function WorkoutCard({ workout }) {
-  const [show, setShow] = useState(true)
-
-  console.log(workout)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = React.useRef()
 
   return (
-    <div>
-    {show ? (
-    <SimpleGrid 
-      spacing={10}
-      templateColumns='repeat(auto-fill, minmax(400px, 1fr))'
-      mx='auto'
-    >
-      <IconButton 
-      aria-label='Add Workout'
-      icon={<AddIcon />}
-      onClick={() => setShow(false)}
-      shadow={'lg'}
-      />
       <Card
-      shadow={'lg'}
-      overflow='hidden'
-      variant='ghost'
-      borderRadius='15px'
       _light={{
         bg: 'gray.100',
         color: 'black',
@@ -49,26 +36,64 @@ export default function WorkoutCard({ workout }) {
         opacity: ".5",
       }}
       >
-        <CardHeader>
-          <Heading size='lg'>
-            { workout?.name }
-          </Heading>
-        </CardHeader>
         <CardBody>
+          <CardHeader>
+            <Heading>
+              { workout?.name }
+            </Heading>
+          </CardHeader>
           <Text>
             { workout?.description }
           </Text>
-            { workout?.exercises.map((exercise) => 
+          { workout?.exercises.map((exercise) => 
             <Stack>
-            <Heading size='md'>{exercise?.name}</Heading>
-            <Text>Sets: {exercise?.sets}</Text>
-            <Text>Reps: {exercise?.reps}</Text>
-            <Text>Weight: {exercise?.weight}</Text>
+              <Heading size='md'>{exercise?.name}</Heading>
+              <Text>
+                Sets: {exercise?.sets} &nbsp;
+                Reps: {exercise?.reps} &nbsp;
+                Weight: {exercise?.weight}
+              </Text>
             </Stack>
-            ) }
+          ) }
         </CardBody>
+        <CardFooter>
+          <ButtonGroup spacing='2'>
+            <Button colorScheme={useColorModeValue('purple', 'yellow')}>
+              Edit
+            </Button>
+            <Button colorScheme='red' onClick={onOpen}>
+              Delete
+            </Button>
+
+            <AlertDialog
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                    Delete Workout
+                  </AlertDialogHeader>
+
+                  <AlertDialogBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </AlertDialogBody>
+
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button colorScheme='red' onClick={onClose} ml={3}>
+                      Delete
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
+
+          </ButtonGroup>
+        </CardFooter>
       </Card>
-    </SimpleGrid> ) : (<CreateWorkoutForm setShow={setShow} />)}
-    </div>
   )
 }

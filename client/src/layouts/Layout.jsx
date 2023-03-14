@@ -6,8 +6,8 @@ import { Container, useColorModeValue } from '@chakra-ui/react';
 
 export default function Layout() {
 
-  const lightBgImage = 'url(/background2.jpg)!important'
-  const darkBgImage = 'url(/background.jpg)!important'
+  // const lightBgImage = 'url(/background2.jpg)!important'
+  // const darkBgImage = 'url(/background.jpg)!important'
 
   return (
     <Container
@@ -17,7 +17,7 @@ export default function Layout() {
       borderRadius="15"
       bgRepeat={'no-repeat'}
       bgSize={'cover'}
-      bgImage={useColorModeValue(lightBgImage, darkBgImage)}
+      // bgImage={useColorModeValue(lightBgImage, darkBgImage)}
     >
       <NavBar />
       <Outlet />

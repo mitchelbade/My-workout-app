@@ -11,8 +11,10 @@ puts "Creating test data..."
 
 
 random_user = User.create(username: "random", password: "password")
+random_user2 = User.create(username: "random2", password: "password")
 
 workout = Workout.create(name: "Workout 1", user: random_user)
+workout2 = Workout.create(name: "Workout 2", user: random_user)
 
 back = MuscleGroup.create(name: "Back")
 biceps = MuscleGroup.create(name: "Biceps")
@@ -35,5 +37,11 @@ squat_stats = WorkoutExercise.create(workout: workout, exercise: squat, sets: 3,
 deadlist_stats = WorkoutExercise.create(workout: workout, exercise: deadlift, sets: 3, reps: 12, weight: 315)
 curl_stats = WorkoutExercise.create(workout: workout, exercise: curl, sets: 3, reps: 12, weight: 45)
 tricep_extension_stats = WorkoutExercise.create(workout: workout, exercise: tricep_extension, sets: 3, reps: 12, weight: 45)
+
+bench_stats = WorkoutExercise.create(workout: workout2, exercise: benchpress, sets: 3, reps: 12, weight: 135)
+squat_stats = WorkoutExercise.create(workout: workout2, exercise: squat, sets: 3, reps: 12, weight: 225)
+deadlist_stats = WorkoutExercise.create(workout: workout2, exercise: deadlift, sets: 3, reps: 12, weight: 315)
+curl_stats = WorkoutExercise.create(workout: workout2, exercise: curl, sets: 3, reps: 12, weight: 45)
+tricep_extension_stats = WorkoutExercise.create(workout: workout2, exercise: tricep_extension, sets: 3, reps: 12, weight: 45)
 
 puts "Done!"

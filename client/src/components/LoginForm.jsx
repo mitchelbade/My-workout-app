@@ -17,6 +17,7 @@ export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const { setUser } = useContext(UserContext);
 
@@ -37,12 +38,13 @@ export default function LoginForm() {
           navigate("/")
         });
       } else {
-        r.json().then((err) => console.log(err));
+        r.json().then((err) => setErrors(err.errors));
       }
     });
   };
 
   return (
+
     <Flex>
       <Form onSubmit={handleSubmit}>
         <FormControl>
@@ -51,22 +53,34 @@ export default function LoginForm() {
             type="text" 
             id="username" 
             autoComplete="off" 
-            placeholder="Username" 
+            placeholder="Username"
+            _dark={{
+              bg: 'gray',
+              color: 'black',
+            }}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </FormControl>
-        
         <FormControl>
           <Input 
           type="password" 
           id="password" 
           autoComplete="current-password" 
           placeholder="Password"
+          _dark={{
+            bg: 'gray',
+            color: 'black',
+          }}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           />
         </FormControl>
+        <FormLabel>
+          {errors.map((error) => (
+            <p key={error}>{error}</p>
+          ))}
+        </FormLabel>
         <Button
             mt={3}
             colorScheme={useColorModeValue('purple', 'yellow')}
@@ -74,7 +88,7 @@ export default function LoginForm() {
           >
             {isLoading ? "Loading..." : "Login"}
           </Button>
-      </Form>  
+      </Form>
     </Flex>
   )
 };

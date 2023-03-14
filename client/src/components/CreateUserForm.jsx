@@ -8,7 +8,6 @@ import {
   Input,
   Button,
   useColorModeValue,
-  // FormErrorMessage,
 } from "@chakra-ui/react";
 import { UserContext } from "../context/userContext";
 
@@ -18,6 +17,7 @@ export default function CreateUserForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const { setUser } = useContext(UserContext);
@@ -30,7 +30,7 @@ export default function CreateUserForm() {
     fetch(baseURL + "/signup", {
       method: "POST",
       headers,
-      body: JSON.stringify({ username, password, passwordConfirmation: passwordConfirmation }),
+      body: JSON.stringify({ username, password, password_confirmation: passwordConfirmation }),
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
@@ -39,7 +39,7 @@ export default function CreateUserForm() {
           navigate("/")
         });
       } else {
-        r.json().then((err) => console.log(err));
+        r.json().then((err) => setErrors(err.errors));
       }
     });
   };
@@ -53,7 +53,11 @@ export default function CreateUserForm() {
             type="text" 
             id="username" 
             autoComplete="off" 
-            placeholder="Username" 
+            placeholder="Username"
+            _dark={{
+              bg: 'gray',
+              color: 'black',
+            }}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -65,6 +69,10 @@ export default function CreateUserForm() {
           id="password" 
           autoComplete="current-password" 
           placeholder="Password"
+          _dark={{
+            bg: 'gray',
+            color: 'black',
+          }}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           />
@@ -75,10 +83,19 @@ export default function CreateUserForm() {
           id="password_confirmation"
           autoComplete="current-password" 
           placeholder="Password Confirmation"
+          _dark={{
+            bg: 'gray',
+            color: 'black',
+          }}
           value={passwordConfirmation}
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
         </FormControl>
+        <FormLabel>
+          {errors.map((error) => (
+            <p key={error}>{error}</p>
+          ))}
+        </FormLabel>
         <Button
             mt={3}
             colorScheme={useColorModeValue('purple', 'yellow')}

@@ -65,6 +65,10 @@ export default function CreateWorkoutForm({ setShow }) {
               placeholder="Workout Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              _dark={{
+                bg: 'gray',
+                color: 'black',
+              }}
               />
           </FormControl>
 
@@ -76,6 +80,10 @@ export default function CreateWorkoutForm({ setShow }) {
               placeholder="Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              _dark={{
+                bg: 'gray',
+                color: 'black',
+              }}
               />
           </FormControl>
           <Button
@@ -93,6 +101,10 @@ export default function CreateWorkoutForm({ setShow }) {
               <Select 
               placeholder="Select exercise"
               onChange={(e) => setWorkoutExercises(e.target.value)}
+              _dark={{
+                bg: 'gray',
+                color: 'black',
+              }}
               >
                 {exercises?.map((exercise) => (
                   <option key={exercise.id} value={exercise.name}>
@@ -109,6 +121,10 @@ export default function CreateWorkoutForm({ setShow }) {
             type="number"
             value={sets}
             onChange={(e) => setSets(e.target.value)}
+            _dark={{
+              bg: 'gray',
+              color: 'black',
+            }}
             />
           </FormControl>
 
@@ -118,6 +134,10 @@ export default function CreateWorkoutForm({ setShow }) {
               type="number"
               value={reps}
               onChange={(e) => setReps(e.target.value)}
+              _dark={{
+                bg: 'gray',
+                color: 'black',
+              }}
             />
           </FormControl>
 
@@ -127,6 +147,10 @@ export default function CreateWorkoutForm({ setShow }) {
               type="number"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
+              _dark={{
+                bg: 'gray',
+                color: 'black',
+              }}
             />
           </FormControl>
           <Button
@@ -138,7 +162,8 @@ export default function CreateWorkoutForm({ setShow }) {
         </Form> )}
 
         <Card
-        onClick={() => console.log('clicked')}
+        width={300}
+        height={300}
         ml='250px'
         padding={5}
         _light={{

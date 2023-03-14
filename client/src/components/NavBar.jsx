@@ -4,7 +4,7 @@ import {
     useColorMode,
     Heading,
     Flex,
-    Box,
+    // Box,
     Button,
     IconButton,
     useColorModeValue,
@@ -119,7 +119,7 @@ export default function NavBar() {
           </NavLink> ) : null}
         </Flex>
 
-        <Box>{user?.username?.charAt(0)?.toUpperCase()}</Box>
+        {/* <Box>{user?.username?.charAt(0)?.toUpperCase()}</Box> */}
 
         <IconButton 
           aria-label="Open Menu"
@@ -149,6 +149,9 @@ export default function NavBar() {
         overflowY="auto"
         flexDir="column"
         display={display}
+        _dark={{
+          bgColor: 'gray.800'
+        }}
       >
         <Flex justify="flex-end" >
           <IconButton 
