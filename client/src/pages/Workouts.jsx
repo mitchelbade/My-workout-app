@@ -16,7 +16,17 @@ export default function Workouts() {
     .then(setWorkouts);
   }, []);
 
-  const workoutCard = workouts?.map((workout) => <WorkoutCard key={workout.id} workout={workout} />)
+  function handleEditWorkout(editWorkout) {
+    setWorkouts((workouts) => 
+      workouts.map((workout) => workout.id === editWorkout.id ? editWorkout : workout));
+  }
+
+  function handleDeleteWorkout(deletedWorkout) {
+    setWorkouts((workouts) => workouts.filter((workout) => workout.id !== deletedWorkout.id)
+    );
+  }
+
+  const workoutCard = workouts?.map((workout) => <WorkoutCard key={workout.id} workout={workout} onDeleteWorkout={handleDeleteWorkout} onEditWorkout={handleEditWorkout} />)
 
   return (
     <SimpleGrid

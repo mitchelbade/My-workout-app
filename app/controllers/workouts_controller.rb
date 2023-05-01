@@ -11,14 +11,15 @@ class WorkoutsController < ApplicationController
     end
 
     def create
-        workout = current_user.workouts.create!(workout_params)
+        workout = current_user.workouts.build(workout_params)
+        workout.save!
         render json: workout, status: :created
     end
 
     def update
         workout = current_user.workouts.find(params[:id])
         workout.update!(workout_params)
-        render json: workout, status: :accepted
+        render json: workout, status: :ok
     end
 
     def destroy
@@ -30,7 +31,7 @@ class WorkoutsController < ApplicationController
     private
 
     def workout_params
-        params.permit(:name, :description)
+        params.require(:workout).permit(:name, :description, workout_exercises_attributes: [:id, :sets, :reps, :weight, :exercise_id])
     end
 
 end

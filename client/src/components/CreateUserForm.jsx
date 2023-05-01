@@ -7,7 +7,7 @@ import {
   FormLabel,
   Input,
   Button,
-  useColorModeValue,
+  Stack,
 } from "@chakra-ui/react";
 import { UserContext } from "../context/userContext";
 
@@ -46,64 +46,66 @@ export default function CreateUserForm() {
 
   return (
     <Flex>
-      <Form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel>Are you ready to get fit?</FormLabel>
-          <Input 
-            type="text" 
-            id="username" 
-            autoComplete="off" 
-            placeholder="Username"
+      <Stack>
+        <Form onSubmit={handleSubmit}>
+          <FormControl>
+            <FormLabel>Are you ready to get fit?</FormLabel>
+            <Input 
+              type="text" 
+              id="username" 
+              autoComplete="off" 
+              placeholder="Username"
+              _dark={{
+                bg: 'gray',
+                color: 'black',
+              }}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </FormControl>
+          
+          <FormControl>
+            <Input 
+            type="password" 
+            id="password" 
+            autoComplete="current-password" 
+            placeholder="Password"
             _dark={{
               bg: 'gray',
               color: 'black',
             }}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </FormControl>
-        
-        <FormControl>
-          <Input 
-          type="password" 
-          id="password" 
-          autoComplete="current-password" 
-          placeholder="Password"
-          _dark={{
-            bg: 'gray',
-            color: 'black',
-          }}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          />
-        </FormControl>
-        <FormControl>
-          <Input 
-          type="password" 
-          id="password_confirmation"
-          autoComplete="current-password" 
-          placeholder="Password Confirmation"
-          _dark={{
-            bg: 'gray',
-            color: 'black',
-          }}
-          value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-          />
-        </FormControl>
-        <FormLabel>
-          {errors.map((error) => (
-            <p key={error}>{error}</p>
-          ))}
-        </FormLabel>
-        <Button
-            mt={3}
-            colorScheme={useColorModeValue('purple', 'yellow')}
-            type='submit'
-          >
-            {isLoading ? "Loading..." : "Create Account"}
-          </Button>
-      </Form>  
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+          </FormControl>
+          <FormControl>
+            <Input 
+            type="password" 
+            id="password_confirmation"
+            autoComplete="current-password" 
+            placeholder="Password Confirmation"
+            _dark={{
+              bg: 'gray',
+              color: 'black',
+            }}
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            />
+          </FormControl>
+          <FormLabel>
+            {errors.map((error) => (
+              <p key={error}>{error}</p>
+            ))}
+          </FormLabel>
+          <Button
+              mt={3}
+              colorScheme={'teal'}
+              type='submit'
+            >
+              {isLoading ? "Loading..." : "Create Account"}
+            </Button>
+        </Form>  
+      </Stack>
     </Flex>
   )
 };

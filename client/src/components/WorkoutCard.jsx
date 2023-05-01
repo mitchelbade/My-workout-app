@@ -15,13 +15,52 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  Popover,
+  useDisclosure,
+  PopoverContent,
+  PopoverBody,
+  useBoolean,
+  PopoverArrow,
+  PopoverCloseButton,
 } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/hooks";
 import React from "react";
+import { baseURL } from "../Globals";
+import EditWorkoutForm from "./EditWorkoutForm";
 
-export default function WorkoutCard({ workout }) {
+export default function WorkoutCard({ workout, onDeleteWorkout, onEditWorkout }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = React.useRef()
+  const [isEditing, setIsEditing] = useBoolean()
+  const firstFieldRef = React.useRef(null)
+
+  function handleEditWorkout() {
+    const updatedWorkout = {
+      name: workout.name,
+      description: workout.description,
+      exercises: workout.exercises,
+    };
+    fetch(baseURL + "/workouts/" + workout.id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedWorkout),
+    })
+      .then((r) => {
+      if (r.ok) {
+        r.json().then(onEditWorkout);
+      }
+    });
+  }
+
+  function handleDeleteWorkout() {
+    fetch(baseURL + "/workouts/" + workout.id, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        onDeleteWorkout(workout);
+      }
+    });
+  }
 
   return (
       <Card
@@ -45,29 +84,45 @@ export default function WorkoutCard({ workout }) {
           <Text>
             { workout?.description }
           </Text>
-          { workout?.exercises.map((exercise) => 
+          { workout?.workout_exercises.map((workout_exercise) => 
             <Stack>
-              <Heading size='md'>{exercise?.name}</Heading>
+              <Heading size='md'>{workout_exercise?.exercise.name}</Heading>
               <Text>
-                Sets: {exercise?.sets} &nbsp;
-                Reps: {exercise?.reps} &nbsp;
-                Weight: {exercise?.weight}
+                Sets: {workout_exercise?.sets} &nbsp;
+                Reps: {workout_exercise?.reps} &nbsp;
+                Weight: {workout_exercise?.weight}
               </Text>
             </Stack>
           ) }
         </CardBody>
         <CardFooter>
           <ButtonGroup spacing='2'>
-            <Button colorScheme={useColorModeValue('purple', 'yellow')}>
-              Edit
-            </Button>
+              <Button colorScheme={useColorModeValue('purple', 'yellow')} onClick={setIsEditing.toggle}>
+                {isEditing ? 'Cancel' : 'Edit'}
+              </Button>
             <Button colorScheme='red' onClick={onOpen}>
               Delete
             </Button>
 
+            <Popover
+              isOpen={isEditing}
+              initialFocusRef={firstFieldRef}
+              onOpen={setIsEditing.on}
+              onClose={setIsEditing.off}
+              closeOnBlur={false}
+              placement='right'
+            >
+              <PopoverContent p={5}>
+                <PopoverBody>
+                  <PopoverArrow />
+                  <PopoverCloseButton />
+                  <EditWorkoutForm firstFieldRef={firstFieldRef} workout={workout} onEditWorkout={handleEditWorkout} />
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+
             <AlertDialog
               isOpen={isOpen}
-              leastDestructiveRef={cancelRef}
               onClose={onClose}
             >
               <AlertDialogOverlay>
@@ -81,10 +136,10 @@ export default function WorkoutCard({ workout }) {
                   </AlertDialogBody>
 
                   <AlertDialogFooter>
-                    <Button ref={cancelRef} onClick={onClose}>
+                    <Button onClick={onClose}>
                       Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={onClose} ml={3}>
+                    <Button colorScheme='red' onClick={handleDeleteWorkout} ml={3}>
                       Delete
                     </Button>
                   </AlertDialogFooter>

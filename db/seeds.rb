@@ -34,13 +34,13 @@ crunch = Exercise.create(name: "Crunch", description: "Crunch your abs", muscle_
 
 bench_stats = WorkoutExercise.create(workout: workout, exercise: benchpress, sets: 3, reps: 12, weight: 135)
 squat_stats = WorkoutExercise.create(workout: workout, exercise: squat, sets: 3, reps: 12, weight: 225)
-deadlist_stats = WorkoutExercise.create(workout: workout, exercise: deadlift, sets: 3, reps: 12, weight: 315)
+deadlift_stats = WorkoutExercise.create(workout: workout, exercise: deadlift, sets: 3, reps: 12, weight: 315)
 curl_stats = WorkoutExercise.create(workout: workout, exercise: curl, sets: 3, reps: 12, weight: 45)
 tricep_extension_stats = WorkoutExercise.create(workout: workout, exercise: tricep_extension, sets: 3, reps: 12, weight: 45)
 
 bench_stats = WorkoutExercise.create(workout: workout2, exercise: benchpress, sets: 3, reps: 12, weight: 135)
 squat_stats = WorkoutExercise.create(workout: workout2, exercise: squat, sets: 3, reps: 12, weight: 225)
-deadlist_stats = WorkoutExercise.create(workout: workout2, exercise: deadlift, sets: 3, reps: 12, weight: 315)
+deadlift_stats = WorkoutExercise.create(workout: workout2, exercise: deadlift, sets: 3, reps: 12, weight: 315)
 curl_stats = WorkoutExercise.create(workout: workout2, exercise: curl, sets: 3, reps: 12, weight: 45)
 tricep_extension_stats = WorkoutExercise.create(workout: workout2, exercise: tricep_extension, sets: 3, reps: 12, weight: 45)
 

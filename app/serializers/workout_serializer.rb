@@ -1,16 +1,18 @@
 class WorkoutSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :exercises
+  attributes :id, :name, :description, :workout_exercises
   has_one :user
 
-  def exercises
-    object.exercises.map do |exercise|
-      workout_exercises = object.workout_exercises.find_by(exercise_id: exercise.id)
+  def workout_exercises
+    object.workout_exercises.map do |workout_exercise|
       {
-        id: exercise.id,
-        name: exercise.name,
-        sets: workout_exercises.sets,
-        reps: workout_exercises.reps,
-        weight: workout_exercises.weight
+        id: workout_exercise.id,
+        sets: workout_exercise.sets,
+        reps: workout_exercise.reps,
+        weight: workout_exercise.weight,
+        exercise: {
+          id: workout_exercise.exercise.id,
+          name: workout_exercise.exercise.name
+        }
       }
     end
   end

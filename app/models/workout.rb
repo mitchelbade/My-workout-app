@@ -4,5 +4,7 @@ class Workout < ApplicationRecord
   has_many :workout_exercises, dependent: :destroy
   has_many :exercises, through: :workout_exercises
 
+  accepts_nested_attributes_for :workout_exercises
+
   validates :name, presence: true, uniqueness: true
 end
