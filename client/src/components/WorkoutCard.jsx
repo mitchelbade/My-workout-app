@@ -15,51 +15,34 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  Popover,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
   useDisclosure,
-  PopoverContent,
-  PopoverBody,
-  useBoolean,
-  PopoverArrow,
-  PopoverCloseButton,
 } from "@chakra-ui/react";
-import React from "react";
-import { baseURL } from "../Globals";
 import EditWorkoutForm from "./EditWorkoutForm";
+import { useContext } from "react";
+import { WorkoutContext } from "../context/workoutContext";
 
-export default function WorkoutCard({ workout, onDeleteWorkout, onEditWorkout }) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [isEditing, setIsEditing] = useBoolean()
-  const firstFieldRef = React.useRef(null)
+export default function WorkoutCard({ workout }) {
+  const deleteButton = useDisclosure()
+  const editButton = useDisclosure()
+  const { handleDeleteWorkout, handleEditWorkout, setWorkoutData } = useContext(WorkoutContext)
 
-  function handleEditWorkout() {
-    const updatedWorkout = {
-      name: workout.name,
-      description: workout.description,
-      exercises: workout.exercises,
-    };
-    fetch(baseURL + "/workouts/" + workout.id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedWorkout),
-    })
-      .then((r) => {
-      if (r.ok) {
-        r.json().then(onEditWorkout);
-      }
-    });
+  const handleEditClick = () => {
+    editButton.onOpen()
+    setWorkoutData(JSON.parse(JSON.stringify(workout)))
   }
 
-  function handleDeleteWorkout() {
-    fetch(baseURL + "/workouts/" + workout.id, {
-      method: "DELETE",
-    }).then((r) => {
-      if (r.ok) {
-        onDeleteWorkout(workout);
-      }
-    });
+  const editWorkout = () => {
+    handleEditWorkout(workout.id)
+    editButton.onClose()
+  }
+
+  const deleteWorkout = () => {
+    handleDeleteWorkout(workout.id)
   }
 
   return (
@@ -97,33 +80,34 @@ export default function WorkoutCard({ workout, onDeleteWorkout, onEditWorkout })
         </CardBody>
         <CardFooter>
           <ButtonGroup spacing='2'>
-              <Button colorScheme={useColorModeValue('purple', 'yellow')} onClick={setIsEditing.toggle}>
-                {isEditing ? 'Cancel' : 'Edit'}
+              <Button colorScheme={useColorModeValue('purple', 'yellow')} onClick={(e) => handleEditClick(e, workout)}>
+                Edit
               </Button>
-            <Button colorScheme='red' onClick={onOpen}>
+            <Button colorScheme='red' onClick={deleteButton.onOpen}>
               Delete
             </Button>
 
-            <Popover
-              isOpen={isEditing}
-              initialFocusRef={firstFieldRef}
-              onOpen={setIsEditing.on}
-              onClose={setIsEditing.off}
-              closeOnBlur={false}
-              placement='right'
+            <Modal
+              isOpen={editButton.isOpen}
+              onClose={editButton.onClose}
+              scrollBehavior="inside"
             >
-              <PopoverContent p={5}>
-                <PopoverBody>
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <EditWorkoutForm firstFieldRef={firstFieldRef} workout={workout} onEditWorkout={handleEditWorkout} />
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
+              <ModalOverlay>
+                <ModalContent>
+                  <ModalHeader fontSize='lg' fontWeight='bold'>
+                    Edit Workout
+                  </ModalHeader>
+
+                  <ModalBody>
+                    <EditWorkoutForm workout={workout} editWorkout={editWorkout} editButton={editButton} />
+                  </ModalBody>
+                </ModalContent>
+              </ModalOverlay>
+            </Modal>
 
             <AlertDialog
-              isOpen={isOpen}
-              onClose={onClose}
+              isOpen={deleteButton.isOpen}
+              onClose={deleteButton.onClose}
             >
               <AlertDialogOverlay>
                 <AlertDialogContent>
@@ -136,10 +120,10 @@ export default function WorkoutCard({ workout, onDeleteWorkout, onEditWorkout })
                   </AlertDialogBody>
 
                   <AlertDialogFooter>
-                    <Button onClick={onClose}>
+                    <Button onClick={deleteButton.onClose}>
                       Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={handleDeleteWorkout} ml={3}>
+                    <Button colorScheme='red' onClick={deleteWorkout} ml={3}>
                       Delete
                     </Button>
                   </AlertDialogFooter>

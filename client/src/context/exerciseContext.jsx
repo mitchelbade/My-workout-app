@@ -13,7 +13,7 @@ function ExerciseProvider({ children }) {
   }, [])
 
   return (
-    <ExerciseContext.Provider value={{ exercises, setExercises }}>{ children }</ExerciseContext.Provider>
+    <ExerciseContext.Provider value={{ exercises }}>{ children }</ExerciseContext.Provider>
   )
 }
 

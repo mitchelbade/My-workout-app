@@ -11,6 +11,8 @@ import CreateUser from './components/CreateUserForm';
 import Workouts from './pages/Workouts';
 import Exercises from './pages/Exercises';
 import { UserProvider } from './context/userContext';
+import { WorkoutProvider } from "./context/workoutContext";
+import { ExerciseProvider } from "./context/exerciseContext";
 
 
 const router = createBrowserRouter(
@@ -29,7 +31,11 @@ const router = createBrowserRouter(
 export default function App() {
   return (
     <UserProvider>
+      <WorkoutProvider>
+        <ExerciseProvider>
           <RouterProvider router={router} />
+        </ExerciseProvider>
+      </WorkoutProvider>
     </UserProvider>
   );
 }

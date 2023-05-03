@@ -18,7 +18,14 @@ class WorkoutsController < ApplicationController
 
     def update
         workout = current_user.workouts.find(params[:id])
-        workout.update!(workout_params)
+        workout.transaction do
+            workout.workout_exercises.each do |workout_exercise|
+                if !workout_params[:workout_exercises_attributes].any? { |we| we[:id] == workout_exercise.id }
+                    workout_exercise.destroy!
+                end
+            end
+            workout.update!(workout_params)
+        end
         render json: workout, status: :ok
     end
 

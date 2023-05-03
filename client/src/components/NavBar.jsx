@@ -4,7 +4,6 @@ import {
     useColorMode,
     Heading,
     Flex,
-    // Box,
     Button,
     IconButton,
     useColorModeValue,
@@ -118,8 +117,6 @@ export default function NavBar() {
             </Button>
           </NavLink> ) : null}
         </Flex>
-
-        {/* <Box>{user?.username?.charAt(0)?.toUpperCase()}</Box> */}
 
         <IconButton 
           aria-label="Open Menu"

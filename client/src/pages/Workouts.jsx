@@ -1,38 +1,24 @@
 import WorkoutCard from "../components/WorkoutCard"
-import { useState, useEffect } from "react";
-import { baseURL } from "../Globals";
+import { useContext } from "react";
+import { WorkoutContext } from "../context/workoutContext";
 import {
-  SimpleGrid
+  SimpleGrid,
+  Card,
 } from "@chakra-ui/react";
 
 
 
 export default function Workouts() {
-  const [workouts, setWorkouts] = useState([]);
+  const { workouts } = useContext(WorkoutContext);
 
-  useEffect(() => {
-    fetch(baseURL + "/workouts")
-    .then((r) => r.json())
-    .then(setWorkouts);
-  }, []);
-
-  function handleEditWorkout(editWorkout) {
-    setWorkouts((workouts) => 
-      workouts.map((workout) => workout.id === editWorkout.id ? editWorkout : workout));
-  }
-
-  function handleDeleteWorkout(deletedWorkout) {
-    setWorkouts((workouts) => workouts.filter((workout) => workout.id !== deletedWorkout.id)
-    );
-  }
-
-  const workoutCard = workouts?.map((workout) => <WorkoutCard key={workout.id} workout={workout} onDeleteWorkout={handleDeleteWorkout} onEditWorkout={handleEditWorkout} />)
+  const workoutCard = workouts?.map((workout) => <WorkoutCard key={workout.id} workout={workout} />)
 
   return (
     <SimpleGrid
     spacing={4}
     templateColumns='repeat(auto-fill, minmax(250px, 1fr))'
     >
+      <Card />
       { workoutCard }
     </SimpleGrid>
   )
