@@ -61,7 +61,7 @@ export default function CreateUserForm() {
               }}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-            />
+            /> &nbsp;
           </FormControl>
           
           <FormControl>
@@ -76,7 +76,7 @@ export default function CreateUserForm() {
             }}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            />
+            /> &nbsp;
           </FormControl>
           <FormControl>
             <Input 
@@ -92,7 +92,9 @@ export default function CreateUserForm() {
             onChange={(e) => setPasswordConfirmation(e.target.value)}
             />
           </FormControl>
-          <FormLabel>
+          <FormLabel
+            color='red.500'
+          >
             {errors.map((error) => (
               <p key={error}>{error}</p>
             ))}

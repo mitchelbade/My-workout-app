@@ -29,16 +29,12 @@ import { WorkoutContext } from "../context/workoutContext";
 export default function WorkoutCard({ workout }) {
   const deleteButton = useDisclosure()
   const editButton = useDisclosure()
-  const { handleDeleteWorkout, handleEditWorkout, setWorkoutData } = useContext(WorkoutContext)
+
+  const { handleDeleteWorkout, setWorkoutData } = useContext(WorkoutContext)
 
   const handleEditClick = () => {
     editButton.onOpen()
     setWorkoutData(JSON.parse(JSON.stringify(workout)))
-  }
-
-  const editWorkout = () => {
-    handleEditWorkout(workout.id)
-    editButton.onClose()
   }
 
   const deleteWorkout = () => {
@@ -68,7 +64,7 @@ export default function WorkoutCard({ workout }) {
             { workout?.description }
           </Text>
           { workout?.workout_exercises.map((workout_exercise) => 
-            <Stack>
+            <Stack key={workout_exercise.id}>
               <Heading size='md'>{workout_exercise?.exercise.name}</Heading>
               <Text>
                 Sets: {workout_exercise?.sets} &nbsp;
@@ -80,9 +76,9 @@ export default function WorkoutCard({ workout }) {
         </CardBody>
         <CardFooter>
           <ButtonGroup spacing='2'>
-              <Button colorScheme={useColorModeValue('purple', 'yellow')} onClick={(e) => handleEditClick(e, workout)}>
-                Edit
-              </Button>
+            <Button colorScheme={useColorModeValue('purple', 'yellow')} onClick={(e) => handleEditClick(e, workout)}>
+              Edit
+            </Button>
             <Button colorScheme='red' onClick={deleteButton.onOpen}>
               Delete
             </Button>
@@ -99,7 +95,7 @@ export default function WorkoutCard({ workout }) {
                   </ModalHeader>
 
                   <ModalBody>
-                    <EditWorkoutForm workout={workout} editWorkout={editWorkout} editButton={editButton} />
+                    <EditWorkoutForm workout={workout} editButton={editButton} />
                   </ModalBody>
                 </ModalContent>
               </ModalOverlay>

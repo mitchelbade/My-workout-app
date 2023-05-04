@@ -5,6 +5,7 @@ import {
   Text,
   ButtonGroup,
   FormControl,
+  FormLabel,
 } from '@chakra-ui/react'
 import {
   AddIcon
@@ -12,11 +13,12 @@ import {
 import { Form } from 'react-router-dom'
 import EditWorkoutField from './EditWorkoutField'
 import { useHandleChange } from '../hooks/hooks'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { WorkoutContext } from '../context/workoutContext'
+import { baseURL } from '../Globals'
 
-export default function EditWorkoutForm({ editButton, editWorkout }) {
-  const { workoutData, setWorkoutData } = useContext(WorkoutContext)
+export default function EditWorkoutForm({ editButton, workout }) {
+  const { errors, setErrors, workoutData, setWorkoutData, handleEditWorkout } = useContext(WorkoutContext)
   const handleChange = useHandleChange(setWorkoutData)
   const handleAddExercise = () => {
     setWorkoutData({
@@ -36,9 +38,22 @@ export default function EditWorkoutForm({ editButton, editWorkout }) {
     })
   }
 
-  useEffect(() => {
-    console.log(workoutData)
-  }, [workoutData])
+  const editWorkout = (e) => {
+    e.preventDefault()
+    handleEditWorkout(workout.id)
+  }
+
+  const handleSaveClick = () => {
+    if (errors.length === 0) {
+      setErrors([])
+      editButton.onClose()
+    }
+  }
+
+  const handleCancelClick = () => {
+    setErrors([])
+    editButton.onClose()
+  }
 
   return (
     <Stack>
@@ -52,15 +67,24 @@ export default function EditWorkoutForm({ editButton, editWorkout }) {
             <EditWorkoutField key={workout_exercise.id} workout_exercise={workout_exercise} index={index}/>
           ))}
         </FormControl>
+        <FormLabel 
+          color='red.500'
+          display='flex'
+          justifyContent='right'
+        >
+          {errors?.map((error) => (
+            <p key={error}>{error}</p>
+          ))}
+        </FormLabel>
         <ButtonGroup display='flex' justifyContent='flex-end'>
           <Button onClick={handleAddExercise}>
             <AddIcon />
           </Button>
-          <Button variant='outline' onClick={editButton?.onClose}>
-            Cancel
-          </Button>
-          <Button colorScheme='teal' type='submit'>
+          <Button colorScheme='teal' type='submit' onClick={handleSaveClick}>
             Save
+          </Button>
+          <Button variant='outline' onClick={handleCancelClick}>
+            Cancel
           </Button>
         </ButtonGroup>
       </Form>

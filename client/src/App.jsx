@@ -2,7 +2,8 @@ import {
   createBrowserRouter, 
   RouterProvider, 
   createRoutesFromElements, 
-  Route } from "react-router-dom";
+  Route 
+} from "react-router-dom";
 import ErrorPage from './pages/ErrorPage';
 import Layout from './layouts/Layout';
 import Home from './pages/Home';
@@ -10,9 +11,6 @@ import Login from './pages/Login';
 import CreateUser from './components/CreateUserForm';
 import Workouts from './pages/Workouts';
 import Exercises from './pages/Exercises';
-import { UserProvider } from './context/userContext';
-import { WorkoutProvider } from "./context/workoutContext";
-import { ExerciseProvider } from "./context/exerciseContext";
 
 
 const router = createBrowserRouter(
@@ -30,12 +28,6 @@ const router = createBrowserRouter(
 
 export default function App() {
   return (
-    <UserProvider>
-      <WorkoutProvider>
-        <ExerciseProvider>
-          <RouterProvider router={router} />
-        </ExerciseProvider>
-      </WorkoutProvider>
-    </UserProvider>
+    <RouterProvider router={router} />
   );
 }

@@ -19,7 +19,7 @@ export const useHandleChangeNested = (setValue, arrayName, index) => {
             set(prev, newPath, value)
             return {...prev}
         })
-    }, [setValue])
+    }, [setValue, arrayName, index])
     return handleChange;
 };
 

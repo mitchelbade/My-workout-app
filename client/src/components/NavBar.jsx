@@ -11,13 +11,13 @@ import {
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { UserContext } from '../context/userContext';
 import { baseURL } from '../Globals';
+import { WorkoutContext } from '../context/workoutContext';
 
 export default function NavBar() {
   const { user, setUser } = useContext(UserContext);
+  const { setWorkouts } = useContext(WorkoutContext);
   const { toggleColorMode } = useColorMode();
   const [display, setDisplay] = useState('none');
-
-
 
   function handleLogoutClick() {
     fetch(baseURL + "/logout", {
@@ -25,6 +25,7 @@ export default function NavBar() {
     }).then((r) => {
       if (r.ok) {
         setUser(null);
+        setWorkouts([]);
       }
     });
   }
@@ -38,7 +39,7 @@ export default function NavBar() {
         align="center"
         my={5}
       >
-        <Heading>Lite Builder</Heading>
+        <Heading>⚡️ Lite Builder</Heading>
       </Flex>
       <Flex
         pos="fixed"

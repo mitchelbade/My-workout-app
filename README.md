@@ -7,8 +7,7 @@ The app provides a clear and detailed view of each workout, including the exerci
 
 
 
-# FUTURE STYLING AND FEATURES
+# Current Issues
 
-# Add home link to header
-# Add circle and change font for user logged in AVATAR
-# Finish image toggle for light/dark mode
+# When I edit a workout and remove an exercise it will not update on submission other information will however
+# I am dealing with my handlesaveclick function on both my edit and creat form trying to get them to remain open and show errors if there are any errors and close if not with the proper information being added/changed.

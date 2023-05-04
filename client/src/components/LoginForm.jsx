@@ -60,7 +60,7 @@ export default function LoginForm() {
             }}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-          />
+          /> &nbsp;
         </FormControl>
         <FormControl>
           <Input 
@@ -76,7 +76,9 @@ export default function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           />
         </FormControl>
-        <FormLabel>
+        <FormLabel
+          color='red.500'
+        >
           {errors.map((error) => (
             <p key={error}>{error}</p>
           ))}

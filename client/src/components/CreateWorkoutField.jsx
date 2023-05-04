@@ -16,10 +16,11 @@ import { WorkoutContext } from '../context/workoutContext'
 import { useHandleChangeNested } from '../hooks/hooks'
 import { MinusIcon } from '@chakra-ui/icons'
 
-export default function EditWorkoutField({ workout_exercise, index }) {
-  const { workoutData, setWorkoutData } = useContext(WorkoutContext)
+
+export default function CreateWorkoutField({ index }) {
+  const { newWorkoutData, setNewWorkoutData } = useContext(WorkoutContext)
   const { exercises } = useContext(ExerciseContext)
-  const handleChange = useHandleChangeNested(setWorkoutData, 'workout_exercises', index)
+  const handleChange = useHandleChangeNested(setNewWorkoutData, 'workout_exercises', index)
   const handleChangeNumber = (name) => (value) => {
     handleChange({
       target: {
@@ -28,13 +29,13 @@ export default function EditWorkoutField({ workout_exercise, index }) {
       }
     })
   }
-  
+
   const handleRemoveExercise = (index) => {
-    setWorkoutData({
-      ...workoutData,
+    setNewWorkoutData({
+      ...newWorkoutData,
       workout_exercises: [
-        ...workoutData.workout_exercises.slice(0, index),
-        ...workoutData.workout_exercises.slice(index + 1),
+        ...newWorkoutData.workout_exercises.slice(0, index),
+        ...newWorkoutData.workout_exercises.slice(index + 1),
       ]
     })
   }
@@ -42,13 +43,13 @@ export default function EditWorkoutField({ workout_exercise, index }) {
   return (
     <Stack>
       <Text>Exercise:</Text>
-      <Select name='exercise.id' value={workoutData?.workout_exercises[index].exercise.id} onChange={handleChange}>
+      <Select name='exercise.id' value={newWorkoutData?.workout_exercises[index].exercise.id} onChange={handleChange}>
         {exercises?.map((exercise) => (
           <option key={exercise.id} value={exercise.id}>{exercise.name}</option>
         ))}
       </Select>
       <Text>Sets:</Text>
-      <NumberInput value={workoutData?.workout_exercises[index].sets} onChange={handleChangeNumber('sets')}>
+      <NumberInput value={newWorkoutData?.workout_exercises[index].sets} onChange={handleChangeNumber('sets')}>
         <NumberInputField />
         <NumberInputStepper>
           <NumberIncrementStepper />
@@ -56,7 +57,7 @@ export default function EditWorkoutField({ workout_exercise, index }) {
         </NumberInputStepper>
       </NumberInput>
       <Text>Reps:</Text>
-      <NumberInput value={workoutData?.workout_exercises[index].reps} onChange={handleChangeNumber('reps')}>
+      <NumberInput value={newWorkoutData?.workout_exercises[index].reps} onChange={handleChangeNumber('reps')}>
         <NumberInputField />
         <NumberInputStepper>
           <NumberIncrementStepper />
@@ -64,7 +65,7 @@ export default function EditWorkoutField({ workout_exercise, index }) {
         </NumberInputStepper>
       </NumberInput>
       <Text>Weight:</Text>
-      <NumberInput value={workoutData?.workout_exercises[index].weight} onChange={handleChangeNumber('weight')}>
+      <NumberInput value={newWorkoutData?.workout_exercises[index].weight} onChange={handleChangeNumber('weight')}>
         <NumberInputField />
         <NumberInputStepper>
           <NumberIncrementStepper />
