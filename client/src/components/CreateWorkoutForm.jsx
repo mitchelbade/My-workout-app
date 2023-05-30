@@ -6,17 +6,24 @@ import {
   Stack,
   Text,
   FormLabel,
-} from '@chakra-ui/react'
-import { AddIcon } from '@chakra-ui/icons'
-import { Form } from 'react-router-dom'
-import { useHandleChange } from '../hooks/hooks'
-import { useContext } from 'react'
-import { WorkoutContext } from '../context/workoutContext'
-import NewWorkoutField from './CreateWorkoutField'
+} from '@chakra-ui/react';
+import { Form } from 'react-router-dom';
+import { AddIcon } from '@chakra-ui/icons';
+import NewWorkoutField from './CreateWorkoutField';
+import { useWorkoutStore } from '../stores/workoutStore';
 
-export default function CreateWorkoutForm({ createButton }) {
-  const { errors, setErrors, newWorkoutData, setNewWorkoutData, handleCreateWorkout } = useContext(WorkoutContext)
-  const handleChange = useHandleChange(setNewWorkoutData)
+export default function CreateWorkoutForm({ createButton, exercises }) {
+  const [ errors, setErrors, newWorkout, setNewWorkout, createWorkout ] = useWorkoutStore((state) => 
+  [ state.errors, state.setErrors, state.newWorkout, state.setNewWorkout, state.createWorkout ]
+  )
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setNewWorkout({
+      [name]: value 
+    })
+  }
+
   const clearFormData = {
     name: '',
     description: '',
@@ -24,33 +31,30 @@ export default function CreateWorkoutForm({ createButton }) {
   }
 
   const handleCancelClick = () => {
-    setNewWorkoutData(clearFormData)
+    setNewWorkout(clearFormData)
     setErrors([])
     createButton.onClose()
   }
 
-  const createWorkout = (e) => {
+  const handleCreateWorkout = (e) => {
       e.preventDefault()
-      handleCreateWorkout()
-      setNewWorkoutData(clearFormData)
+      createWorkout(newWorkout)
+      setNewWorkout(clearFormData)
   }
 
   const handleSaveClick = () => {
-    if (!errors) {
       setErrors([])
       createButton.onClose()
-    }
   }
 
   const handleAddExercise = () => {
-    setNewWorkoutData({
-      ...newWorkoutData,
+    setNewWorkout({
+      ...newWorkout,
       workout_exercises: [
-        ...newWorkoutData.workout_exercises,
+        ...newWorkout.workout_exercises,
         {
           exercise: {
             id: 1,
-            name: 'Bench Press',
           },
           sets: 3,
           reps: 10,
@@ -62,14 +66,14 @@ export default function CreateWorkoutForm({ createButton }) {
 
   return (
     <Stack>
-      <Form onSubmit={createWorkout}>
+      <Form onSubmit={handleCreateWorkout}>
         <FormControl>
           <Text>Name:</Text>
-          <Input variant='outline' name="name" value={newWorkoutData?.name} onChange={handleChange}/>&nbsp;
+          <Input variant='outline' name="name" value={newWorkout?.name} onChange={handleChange}/>&nbsp;
           <Text>Description:</Text>
-          <Input variant='outline' name="description" value={newWorkoutData?.description} onChange={handleChange}/>&nbsp;
-          {newWorkoutData?.workout_exercises.map((workout_exercise, index) => (
-            <NewWorkoutField key={workout_exercise.id} workout_exercise={workout_exercise} index={index}/>
+          <Input variant='outline' name="description" value={newWorkout?.description} onChange={handleChange}/>&nbsp;
+          {newWorkout?.workout_exercises.map((workout_exercise, index) => (
+            <NewWorkoutField key={index} workout_exercise={workout_exercise} index={index} exercises={exercises}/>
           ))}
         </FormControl>
         <FormLabel 
@@ -77,8 +81,8 @@ export default function CreateWorkoutForm({ createButton }) {
           display='flex'
           justifyContent='right'
         >
-          {errors?.map((error) => (
-            <p key={error}>{error}</p>
+          {errors?.map((error, index) => (
+            <p key={index}>{error}</p>
           ))}
         </FormLabel>
         <ButtonGroup display='flex' justifyContent='flex-end'>

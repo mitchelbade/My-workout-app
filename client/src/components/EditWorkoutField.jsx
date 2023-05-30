@@ -10,16 +10,24 @@ import {
   Spacer,
   Button,
 } from '@chakra-ui/react'
-import { useContext } from 'react'
-import { ExerciseContext } from '../context/exerciseContext'
-import { WorkoutContext } from '../context/workoutContext'
-import { useHandleChangeNested } from '../hooks/hooks'
+import { set } from 'lodash'
 import { MinusIcon } from '@chakra-ui/icons'
+import { useWorkoutStore } from '../stores/workoutStore'
+import { useExerciseStore } from '../stores/exerciseStore'
 
-export default function EditWorkoutField({ workout_exercise, index }) {
-  const { workoutData, setWorkoutData } = useContext(WorkoutContext)
-  const { exercises } = useContext(ExerciseContext)
-  const handleChange = useHandleChangeNested(setWorkoutData, 'workout_exercises', index)
+
+export default function EditWorkoutField({ index }) {
+  const [ workoutData, setWorkoutData ] = useWorkoutStore((state) => [ state.workoutData, state.setWorkoutData ])
+  const [ exercises ] = useExerciseStore((state) => [ state.exercises ])
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    const path = `workout_exercises[${index}].${name}`
+    const workout = set(workoutData, path, value)
+    setWorkoutData(JSON.parse(JSON.stringify(workout)))
+  }
+
   const handleChangeNumber = (name) => (value) => {
     handleChange({
       target: {

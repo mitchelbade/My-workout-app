@@ -12,14 +12,20 @@ import {
 } from '@chakra-ui/icons'
 import { Form } from 'react-router-dom'
 import EditWorkoutField from './EditWorkoutField'
-import { useHandleChange } from '../hooks/hooks'
-import { useContext } from 'react'
-import { WorkoutContext } from '../context/workoutContext'
-import { baseURL } from '../Globals'
+import { useWorkoutStore } from '../stores/workoutStore'
 
-export default function EditWorkoutForm({ editButton, workout }) {
-  const { errors, setErrors, workoutData, setWorkoutData, handleEditWorkout } = useContext(WorkoutContext)
-  const handleChange = useHandleChange(setWorkoutData)
+
+export default function EditWorkoutForm({ editButton, handleEditWorkout }) {
+  const [ errors, setErrors, workoutData, setWorkoutData ] = useWorkoutStore((state) => 
+  [ state.errors, state.setErrors, state.workoutData, state.setWorkoutData ]
+  )
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setWorkoutData({
+      [name]: value 
+    })
+  }
+
   const handleAddExercise = () => {
     setWorkoutData({
       ...workoutData,
@@ -28,7 +34,6 @@ export default function EditWorkoutForm({ editButton, workout }) {
         {
           exercise: {
             id: 1,
-            name: 'Bench Press',
           },
           sets: 3,
           reps: 10,
@@ -38,16 +43,9 @@ export default function EditWorkoutForm({ editButton, workout }) {
     })
   }
 
-  const editWorkout = (e) => {
-    e.preventDefault()
-    handleEditWorkout(workout.id)
-  }
-
   const handleSaveClick = () => {
-    if (errors.length === 0) {
-      setErrors([])
-      editButton.onClose()
-    }
+    setErrors([])
+    editButton.onClose()
   }
 
   const handleCancelClick = () => {
@@ -57,14 +55,14 @@ export default function EditWorkoutForm({ editButton, workout }) {
 
   return (
     <Stack>
-      <Form onSubmit={editWorkout}>
+      <Form onSubmit={handleEditWorkout}>
         <FormControl>
           <Text>Name:</Text>
           <Input variant='outline' name="name" value={workoutData?.name} onChange={handleChange}/>&nbsp;
           <Text>Description:</Text>
           <Input variant='outline' name="description" value={workoutData?.description} onChange={handleChange}/>&nbsp;
           {workoutData?.workout_exercises.map((workout_exercise, index) => (
-            <EditWorkoutField key={workout_exercise.id} workout_exercise={workout_exercise} index={index}/>
+            <EditWorkoutField key={index} workout_exercise={workout_exercise} index={index}/>
           ))}
         </FormControl>
         <FormLabel 
@@ -72,8 +70,8 @@ export default function EditWorkoutForm({ editButton, workout }) {
           display='flex'
           justifyContent='right'
         >
-          {errors?.map((error) => (
-            <p key={error}>{error}</p>
+          {errors?.map((error, index) => (
+            <p key={index}>{error}</p>
           ))}
         </FormLabel>
         <ButtonGroup display='flex' justifyContent='flex-end'>

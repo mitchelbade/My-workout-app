@@ -5,13 +5,14 @@ Rails.application.routes.draw do
   resources :workout_exercises, only: [:index, :create, :update]
   resources :workouts
   resources :muscle_groups, only: [:index]
-  resources :exercises, only: [:index, :show]
+  resources :exercises, only: [:index, :show, :create, :update]
   # resources :users
 
   post '/signup', to: 'users#create'
   get '/me', to: 'users#show'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  get '/workouts/exercises/:length', to: 'workouts#exercise_length'
 
 
   # Routing logic: fallback requests for React Router.

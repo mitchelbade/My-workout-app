@@ -1,33 +1,32 @@
-import { useState, useContext } from "react";
-import { baseURL, headers } from "../Globals";
-import { Form, useNavigate } from "react-router-dom";
 import { 
-  Flex,
-  FormControl,
+Flex,
+FormControl,
   FormLabel,
   Input,
   Button,
   Stack,
 } from "@chakra-ui/react";
-import { UserContext } from "../context/userContext";
+import { useState } from "react";
+import { baseURL, headers } from "../Globals";
+import { useUserStore } from "../stores/userStore";
+import { Form, useNavigate } from "react-router-dom";
 
 
 
 export default function CreateUserForm() {
+  const { setUser } = useUserStore();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { setUser } = useContext(UserContext);
-
   const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
-    fetch(baseURL + "/signup", {
+    fetch(`${baseURL}/signup`, {
       method: "POST",
       headers,
       body: JSON.stringify({ username, password, password_confirmation: passwordConfirmation }),

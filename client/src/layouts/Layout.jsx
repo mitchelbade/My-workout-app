@@ -1,18 +1,25 @@
-import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { fetchUser } from '../api';
 import NavBar from '../components/NavBar';
+import { Outlet } from 'react-router-dom';
 import { Container } from '@chakra-ui/react';
-import { WorkoutProvider } from '../context/workoutContext';
-import { ExerciseProvider } from '../context/exerciseContext';
-import { UserProvider } from '../context/userContext';
-
-
+import { useUserStore } from '../stores/userStore';
 
 export default function Layout() {
+  const { setUser } = useUserStore();
+
+  useEffect(() => {
+    const login = async () => {
+      const userData = await fetchUser();
+      if (userData) {
+        setUser(userData);
+      }
+    }
+    login();
+  }, [setUser])
+
 
   return (
-    <UserProvider>
-      <WorkoutProvider>
-        <ExerciseProvider>
           <Container
             mt="150px"
             py="150px"
@@ -21,11 +28,8 @@ export default function Layout() {
             bgRepeat={'no-repeat'}
             bgSize={'cover'}
           >
-            <NavBar />
             <Outlet />
+            <NavBar />
           </Container>
-        </ExerciseProvider>
-      </WorkoutProvider>
-    </UserProvider>
   );
 }

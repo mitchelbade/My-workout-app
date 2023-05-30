@@ -1,5 +1,3 @@
-import { useState, useContext } from 'react';
-import { NavLink } from 'react-router-dom';
 import {
     useColorMode,
     Heading,
@@ -8,14 +6,16 @@ import {
     IconButton,
     useColorModeValue,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { UserContext } from '../context/userContext';
 import { baseURL } from '../Globals';
-import { WorkoutContext } from '../context/workoutContext';
+import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { useUserStore } from '../stores/userStore';
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { useWorkoutStore } from '../stores/workoutStore';
 
 export default function NavBar() {
-  const { user, setUser } = useContext(UserContext);
-  const { setWorkouts } = useContext(WorkoutContext);
+  const { user, setUser } = useUserStore();
+  const { setWorkouts } = useWorkoutStore();
   const { toggleColorMode } = useColorMode();
   const [display, setDisplay] = useState('none');
 
@@ -31,22 +31,32 @@ export default function NavBar() {
   }
 
   return (
-    <Flex>
+    <Flex
+      backgroundColor={useColorModeValue('gray.200', 'gray.900')}
+      minH={'125px'}
+      pos="fixed"
+      top="0"
+      left="0"
+      right="0"
+      w="100dvw"
+      boxShadow={'0 0 10px 3px rgba(0, 0, 0, 0.2)'}
+    >
       <Flex
         pos="fixed"
-        top="1rem"
-        left="1rem"
-        align="center"
+        top="10px"
+        left="10px"
         my={5}
       >
-        <Heading>⚡️ Lite Builder</Heading>
+        <Heading
+        fontSize={'5xl'}
+        >⚡️ Lite Builder</Heading>
       </Flex>
       <Flex
         pos="fixed"
-        top="1rem"
-        right="1rem"
+        top="10px"
+        right="10px"
         align="center"
-        gap="20px"
+        gap="10px"
       >
         <Flex
           display={['none', 'none', 'flex', 'flex']}
@@ -123,6 +133,7 @@ export default function NavBar() {
           aria-label="Open Menu"
           size="lg"
           mr={2}
+          my={5}
           icon={<HamburgerIcon />}
           display={['flex', 'flex', 'none', 'none']}
           onClick={() => setDisplay('flex')}
@@ -130,6 +141,9 @@ export default function NavBar() {
 
         <IconButton 
           aria-label="Toggle theme"
+          size="lg"
+          mr={2}
+          my={5}
           colorScheme={useColorModeValue('purple', 'yellow')}
           icon={useColorModeValue(<MoonIcon />, <SunIcon />)}
           onClick={toggleColorMode}
@@ -153,8 +167,8 @@ export default function NavBar() {
       >
         <Flex justify="flex-end" >
           <IconButton 
-            mt={2}
-            mr={2}
+            mt={3}
+            mr={6}
             aria-label="Close Menu"
             size="lg"
             icon={<CloseIcon />}

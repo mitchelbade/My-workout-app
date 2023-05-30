@@ -23,22 +23,26 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import EditWorkoutForm from "./EditWorkoutForm";
-import { useContext } from "react";
-import { WorkoutContext } from "../context/workoutContext";
+import { useWorkoutStore } from "../stores/workoutStore";
 
 export default function WorkoutCard({ workout }) {
   const deleteButton = useDisclosure()
   const editButton = useDisclosure()
-
-  const { handleDeleteWorkout, setWorkoutData } = useContext(WorkoutContext)
+  const [ workoutData, setWorkoutData, deleteWorkout, editWorkout ] = useWorkoutStore((state) => 
+  [ state.workoutData, state.setWorkoutData, state.deleteWorkout, state.editWorkout ])
 
   const handleEditClick = () => {
     editButton.onOpen()
     setWorkoutData(JSON.parse(JSON.stringify(workout)))
   }
 
-  const deleteWorkout = () => {
-    handleDeleteWorkout(workout.id)
+  const handleEditWorkout = () => {
+    editWorkout(workout.id, workoutData)
+  }
+
+  const handleDeleteWorkout = () => {
+    deleteWorkout(workout.id)
+    deleteButton.onClose()
   }
 
   return (
@@ -95,7 +99,7 @@ export default function WorkoutCard({ workout }) {
                   </ModalHeader>
 
                   <ModalBody>
-                    <EditWorkoutForm workout={workout} editButton={editButton} />
+                    <EditWorkoutForm editButton={editButton} handleEditWorkout={handleEditWorkout} />
                   </ModalBody>
                 </ModalContent>
               </ModalOverlay>
@@ -119,7 +123,7 @@ export default function WorkoutCard({ workout }) {
                     <Button onClick={deleteButton.onClose}>
                       Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={deleteWorkout} ml={3}>
+                    <Button colorScheme='red' onClick={handleDeleteWorkout} ml={3}>
                       Delete
                     </Button>
                   </AlertDialogFooter>

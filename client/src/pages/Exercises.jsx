@@ -1,16 +1,21 @@
+import { useEffect } from "react";
+import { fetchExercises } from "../api";
 import ExerciseCard from "../components/ExerciseCard"
-import { useState, useEffect } from "react"
-import { baseURL } from "../Globals"
+import { useExerciseStore } from "../stores/exerciseStore";
 
 
 export default function Exercises() {
-  const [exercises, setExercises] = useState([]);
+  const { exercises, setExercises } = useExerciseStore();
 
   useEffect(() => {
-    fetch(baseURL + "/exercises")
-    .then((r) => r.json())
-    .then(setExercises)
-  }, [])
+    const fetchData = async () => {
+      const exerciseData = await fetchExercises();
+      if (exerciseData) {
+        setExercises(exerciseData);
+      }
+    }
+    fetchData();
+  }, [setExercises])
 
   const exerciseCard = exercises?.map((exercise) => <ExerciseCard key={exercise.id} exercise={exercise} />)
 

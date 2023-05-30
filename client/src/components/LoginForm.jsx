@@ -1,6 +1,3 @@
-import { useState, useContext } from "react";
-import { baseURL, headers } from "../Globals";
-import { Form, useNavigate } from "react-router-dom";
 import { 
   Flex,
   FormControl,
@@ -9,24 +6,26 @@ import {
   Button,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { UserContext } from "../context/userContext";
+import { useState } from "react";
+import { baseURL, headers } from "../Globals";
+import { useUserStore } from "../stores/userStore";
+import { Form, useNavigate } from "react-router-dom";
 
 
 
 export default function LoginForm() {
+  const { setUser } = useUserStore();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-
-  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
-    fetch(baseURL + "/login", {
+    fetch(`${baseURL}/login`, {
       method: "POST",
       headers,
       body: JSON.stringify({ username, password }),
