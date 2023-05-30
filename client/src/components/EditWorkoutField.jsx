@@ -29,9 +29,10 @@ export default function EditWorkoutField({ index }) {
   }
 
   const handleChangeNumber = (name) => (value) => {
+    const parsedValue = value === '' ? '' : parseInt(value)
     handleChange({
       target: {
-        value: parseInt(value),
+        value: parsedValue,
         name,
       }
     })
