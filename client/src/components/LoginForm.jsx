@@ -44,7 +44,15 @@ export default function LoginForm() {
 
   return (
 
-    <Flex>
+    <Flex
+      justify={'center'}
+      align={'center'}
+      backgroundColor={useColorModeValue('gray.200', 'gray.900')}
+      boxShadow={'0 0 10px 3px rgba(0, 0, 0, 0.2)'}
+      maxW={'30dvh'}
+      minH={'30dvh'}
+      borderRadius={'md'}
+    >
       <Form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel>Welcome!</FormLabel>
@@ -55,6 +63,10 @@ export default function LoginForm() {
             placeholder="Username"
             _dark={{
               bg: 'gray',
+              color: 'black',
+            }}
+            _light={{
+              bg: 'white',
               color: 'black',
             }}
             value={username}
@@ -69,6 +81,10 @@ export default function LoginForm() {
           placeholder="Password"
           _dark={{
             bg: 'gray',
+            color: 'black',
+          }}
+          _light={{
+            bg: 'white',
             color: 'black',
           }}
           value={password}

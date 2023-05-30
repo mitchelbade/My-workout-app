@@ -5,6 +5,7 @@ FormControl,
   Input,
   Button,
   Stack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { baseURL, headers } from "../Globals";
@@ -44,7 +45,15 @@ export default function CreateUserForm() {
   };
 
   return (
-    <Flex>
+    <Flex
+      justify={'center'}
+      align={'center'}
+      backgroundColor={useColorModeValue('gray.200', 'gray.900')}
+      boxShadow={'0 0 10px 3px rgba(0, 0, 0, 0.2)'}
+      maxW={'30dvh'}
+      minH={'30dvh'}
+      borderRadius={'md'}
+    >
       <Stack>
         <Form onSubmit={handleSubmit}>
           <FormControl>
@@ -56,6 +65,10 @@ export default function CreateUserForm() {
               placeholder="Username"
               _dark={{
                 bg: 'gray',
+                color: 'black',
+              }}
+              _light={{
+                bg: 'white',
                 color: 'black',
               }}
               value={username}
@@ -73,6 +86,10 @@ export default function CreateUserForm() {
               bg: 'gray',
               color: 'black',
             }}
+            _light={{
+              bg: 'white',
+              color: 'black',
+            }}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             /> &nbsp;
@@ -85,6 +102,10 @@ export default function CreateUserForm() {
             placeholder="Password Confirmation"
             _dark={{
               bg: 'gray',
+              color: 'black',
+            }}
+            _light={{
+              bg: 'white',
               color: 'black',
             }}
             value={passwordConfirmation}
