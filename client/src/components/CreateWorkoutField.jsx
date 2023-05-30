@@ -44,8 +44,6 @@ export default function CreateWorkoutField({ index, exercises }) {
     })
   }
 
-  console.log(newWorkout)
-
   return (
     <Stack>
       <Text>Exercise:</Text>

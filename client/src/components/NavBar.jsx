@@ -14,8 +14,7 @@ import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { useWorkoutStore } from '../stores/workoutStore';
 
 export default function NavBar() {
-  const { user, setUser } = useUserStore();
-  const { setWorkouts } = useWorkoutStore();
+  const [ user, setUser ] = useUserStore((state) => [state.user, state.setUser]);
   const { toggleColorMode } = useColorMode();
   const [display, setDisplay] = useState('none');
 
@@ -25,7 +24,6 @@ export default function NavBar() {
     }).then((r) => {
       if (r.ok) {
         setUser(null);
-        setWorkouts([]);
       }
     });
   }

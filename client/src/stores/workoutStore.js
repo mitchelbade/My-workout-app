@@ -61,7 +61,7 @@ export const useWorkoutStore = create((set) => ({
             }
           }
         }
-        setTimeout(fetchData, 100);
+        setTimeout(fetchData, 200);
       })
   },
 
@@ -78,7 +78,7 @@ export const useWorkoutStore = create((set) => ({
             }
           }
         }
-        setTimeout(fetchData, 100);
+        setTimeout(fetchData, 200);
       })
   },
 
