@@ -11,7 +11,6 @@ import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useUserStore } from '../stores/userStore';
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { useWorkoutStore } from '../stores/workoutStore';
 
 export default function NavBar() {
   const [ user, setUser ] = useUserStore((state) => [state.user, state.setUser]);
