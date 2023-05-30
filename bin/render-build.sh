@@ -7,6 +7,7 @@ set -x
 rm -rf public
 npm install --prefix client && npm run build --prefix client
 cp -a client/build/. public/
+cp client/src/theme.jsx public/
 
 # builds the back end code
 bundle install
